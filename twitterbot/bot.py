@@ -177,7 +177,7 @@ class TwitterBot:
 
 
 
-    def post_tweet(self, text, reply_to=None, filename=None, filedata=None):
+    def post_tweet(self, text, reply_to=None, media=None, file=None):
         """
         Post a tweet containing the text. 
         If you provide a filename the file will be added to the tweet.
@@ -187,12 +187,12 @@ class TwitterBot:
         kwargs = { "status": text }
         args = []
 
-        if filename is not None:
+        if media is not None:
             cmd = self.api.update_with_media
-            args.insert(0, filename)
+            args.insert(0, media)
 
-            if filedata is not None:
-                kwargs["file"] = filedata
+            if file is not None:
+                kwargs["file"] = file
         else:
             cmd = self.api.update_status
 
