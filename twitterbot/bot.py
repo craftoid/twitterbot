@@ -176,12 +176,23 @@ class TwitterBot:
         self.state['followers'].append(f_id)
 
 
-    def post_tweet(self, text, reply_to=None, media=None):
+
+    def post_tweet(self, text, reply_to=None, filename=None, filedata=None):
+        """
+        Post a tweet containing the text. 
+        If you provide a filename the file will be added to the tweet.
+        You can also provide the filedata, for example when using dynamically created images.
+        """
+        
         kwargs = { "status": text }
         args = []
-        if media is not None:
+
+        if filename is not None:
             cmd = self.api.update_with_media
-            args.insert(0, media)
+            args.insert(0, filename)
+
+            if filedata is not None:
+                kwargs["file"] = filedata
         else:
             cmd = self.api.update_status
 
